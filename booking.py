@@ -42,8 +42,15 @@ class Booking:
                 print(f"There is no city like {city_name}")
         sleep(5)
 
-    def select_category(self, category_name):
+    def select_category(self, category_name, sub_category):
+        self.driver.find_element(
+            By.XPATH,'//button[@class="kt-dropdown-button kt-dropdown-button--medium kt-dropdown-button--inlined"]').click()
+        sleep(3)
         try:
-            self.driver.find_element(By.XPATH,f"//a[@class='kt-accordion-item__header kt-accordion-item__header--with-icon' and text()='{category_name}']").click()
+            #self.driver.find_element(By.XPATH,f"//a[@class='kt-accordion-item__header kt-accordion-item__header--with-icon' and text()='{category_name}']").click()
+            self.driver.find_element(By.XPATH,f'//span[text()="{category_name}"]').click()
+            sleep(2)
+            self.driver.find_element(By.XPATH,f'//a[text()="{sub_category}"]').click()
+            sleep(3)
         except:
-            print(f"There is no category like {category_name}")
+            print(f'There is no category like "{category_name}"')
