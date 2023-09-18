@@ -42,7 +42,7 @@ class Booking:
                 print(f"There is no city like {city_name}")
         sleep(5)
 
-    def select_category(self, category_name, sub_category):
+    def select_category(self, category_name):
         try:
             self.driver.find_element(By.XPATH,f"//a[@class='kt-accordion-item__header kt-accordion-item__header--with-icon' and text()='{category_name}']").click()
         except:
