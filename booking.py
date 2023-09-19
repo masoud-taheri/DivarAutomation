@@ -57,6 +57,14 @@ class Booking:
 
     def select_price(self, lowest, highest):
         self.driver.find_element(By.ID, 'khesht-7').click()
+        sleep(2)
+        self.driver.find_element(By.ID, 'min-1088541640').click()
+        sleep(2)
+        self.driver.find_element(By.XPATH, "// li[text() = 'وارد کردن مقدار دلخواه']").click()
+        self.driver.find_element(By.ID, 'min-1088541640').send_keys(lowest)
+
+
+
 
 
 
