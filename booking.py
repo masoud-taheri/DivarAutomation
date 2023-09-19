@@ -54,3 +54,15 @@ class Booking:
             sleep(3)
         except:
             print(f'There is no category like "{category}"')
+
+    def select_price(self, lowest, highest):
+        self.driver.find_element(By.ID, 'khesht-7').click()
+
+
+
+
+
+
+
+
+
