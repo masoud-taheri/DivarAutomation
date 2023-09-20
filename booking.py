@@ -30,7 +30,6 @@ class Booking:
         city_list=[]
         for city in cities:
             city_list.append(city.text)
-        print(city_list)
         if city_name in city_list:
             self.driver.find_element(By.XPATH, f"//h2[@class='city-card__title-be246' and text()='{city_name}']").click()
         else:
@@ -40,7 +39,6 @@ class Booking:
                 self.driver.find_element(By.XPATH,"//div[@role='menu']//div[@class='kt-search-result-row'][1]").click()
             except:
                 print(f"There is no city like {city_name}")
-        sleep(5)
 
     def select_category(self, category, sub_category):
         self.driver.find_element(
@@ -49,19 +47,34 @@ class Booking:
         try:
             #self.driver.find_element(By.XPATH,f"//a[@class='kt-accordion-item__header kt-accordion-item__header--with-icon' and text()='{category_name}']").click()
             self.driver.find_element(By.XPATH,f'//span[text()="{category}"]').click()
-            sleep(2)
             self.driver.find_element(By.XPATH,f'//a[text()="{sub_category}"]').click()
-            sleep(3)
         except:
             print(f'There is no category like "{category}"')
 
     def select_price(self, lowest, highest):
-        self.driver.find_element(By.ID, 'khesht-7').click()
+        self.driver.find_element(By.ID, 'khesht-3').click()
         sleep(2)
-        self.driver.find_element(By.ID, 'min-1088541640').click()
+        self.driver.find_element(By.XPATH, '//div[@class="kt-dropdown-menu kt-select-drop-down kt-ftr__control"][1]').click()
         sleep(2)
-        self.driver.find_element(By.XPATH, "// li[text() = 'وارد کردن مقدار دلخواه']").click()
-        self.driver.find_element(By.ID, 'min-1088541640').send_keys(lowest)
+        selectable_lowest_prices = self.driver.find_elements(By.XPATH, "//li[@class='kt-dropdown-item kt-dropdown-item--small']")
+        lowest_prices = []
+        highest_prices = []
+        for prices in selectable_lowest_prices:
+            lowest_prices.append(prices.text)
+        print(lowest_prices)
+        if lowest in lowest_prices:
+            self.driver.find_element(By.XPATH, f"//li[@class='kt-dropdown-item kt-dropdown-item--small' and text()='{lowest} ']").click()
+        else:
+            self.driver.find_element(By.XPATH, "//li[text()='وارد کردن مقدار دلخواه']").click()
+            self.driver.find_element(By.ID, 'min-1088541640').send_keys(lowest)
+        sleep(2)
+
+        self.driver.find_element(By.XPATH, '//div[@class="kt-dropdown-menu kt-select-drop-down kt-ftr__control"][2]').click()
+        selectable_highest_prices = self.driver.find_elements(By.XPATH, "//li[@class='kt-dropdown-item kt-dropdown-item--small']")
+        for prices in selectable_highest_prices:
+            highest_prices.append(prices.text)
+        print(highest_prices)
+        sleep(2)
 
 
 
