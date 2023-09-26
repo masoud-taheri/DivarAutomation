@@ -1,12 +1,14 @@
 from time import sleep
 
-from selenium.webdriver import ActionChains
+from selenium.webdriver import Keys
+from selenium.webdriver.common import keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
 
 import Constants
 
@@ -56,24 +58,30 @@ class Booking:
         sleep(2)
         self.driver.find_element(By.XPATH, '//div[@class="kt-dropdown-menu kt-select-drop-down kt-ftr__control"][1]').click()
         sleep(2)
-        selectable_lowest_prices = self.driver.find_elements(By.XPATH, "//li[@class='kt-dropdown-item kt-dropdown-item--small']")
-        lowest_prices = []
+        selectable_prices = self.driver.find_elements(By.XPATH, "//li[@class='kt-dropdown-item kt-dropdown-item--small']")
+        all_prices = []
         highest_prices = []
-        for prices in selectable_lowest_prices:
-            lowest_prices.append(prices.text)
-        print(lowest_prices)
-        if lowest in lowest_prices:
+
+        for prices in selectable_prices:
+            all_prices.append(prices.text)
+        if lowest in all_prices:
             self.driver.find_element(By.XPATH, f"//li[@class='kt-dropdown-item kt-dropdown-item--small' and text()='{lowest} ']").click()
         else:
             self.driver.find_element(By.XPATH, "//li[text()='وارد کردن مقدار دلخواه']").click()
-            self.driver.find_element(By.ID, 'min-1088541640').send_keys(lowest)
+            desired_amount = self.driver.find_element(By.ID, 'min-1088541640')
+            desired_amount.send_keys(lowest)
+            desired_amount.send_keys(Keys.ENTER)
         sleep(2)
 
-        self.driver.find_element(By.XPATH, '//div[@class="kt-dropdown-menu kt-select-drop-down kt-ftr__control"][2]').click()
-        selectable_highest_prices = self.driver.find_elements(By.XPATH, "//li[@class='kt-dropdown-item kt-dropdown-item--small']")
-        for prices in selectable_highest_prices:
-            highest_prices.append(prices.text)
-        print(highest_prices)
+        self.driver.find_element(By.XPATH,
+                                 "//div[@class='kt-dropdown-menu kt-select-drop-down kt-ftr__control'][2]").click()
+        if highest in all_prices:
+            self.driver.find_element(By.XPATH, f"//li[@class='kt-dropdown-item kt-dropdown-item--small' and text()='{highest} ']").click()
+        else:
+            self.driver.find_element(By.XPATH, "//li[text()='وارد کردن مقدار دلخواه']").click()
+            desired_amount = self.driver.find_element(By.ID, 'max-1088541640')
+            desired_amount.send_keys(highest)
+            desired_amount.send_keys(Keys.ENTER)
         sleep(2)
 
 
