@@ -56,16 +56,19 @@ class Booking:
     def select_price(self, lowest, highest):
         self.driver.find_element(By.ID, 'khesht-3').click()
         sleep(2)
-        self.driver.find_element(By.XPATH, '//div[@class="kt-dropdown-menu kt-select-drop-down kt-ftr__control"][1]').click()
+        self.driver.find_element(By.XPATH,
+                                 '//div[@class="kt-dropdown-menu kt-select-drop-down kt-ftr__control"][1]').click()
         sleep(2)
-        selectable_prices = self.driver.find_elements(By.XPATH, "//li[@class='kt-dropdown-item kt-dropdown-item--small']")
+        selectable_prices = self.driver.find_elements(By.XPATH,
+                                                      "//li[@class='kt-dropdown-item kt-dropdown-item--small']")
         all_prices = []
         highest_prices = []
 
         for prices in selectable_prices:
             all_prices.append(prices.text)
         if lowest in all_prices:
-            self.driver.find_element(By.XPATH, f"//li[@class='kt-dropdown-item kt-dropdown-item--small' and text()='{lowest} ']").click()
+            self.driver.find_element(By.XPATH,
+                                     f"//li[@class='kt-dropdown-item kt-dropdown-item--small' and text()='{lowest} ']").click()
         else:
             self.driver.find_element(By.XPATH, "//li[text()='وارد کردن مقدار دلخواه']").click()
             desired_amount = self.driver.find_element(By.ID, 'min-1088541640')
@@ -76,13 +79,21 @@ class Booking:
         self.driver.find_element(By.XPATH,
                                  "//div[@class='kt-dropdown-menu kt-select-drop-down kt-ftr__control'][2]").click()
         if highest in all_prices:
-            self.driver.find_element(By.XPATH, f"//li[@class='kt-dropdown-item kt-dropdown-item--small' and text()='{highest} ']").click()
+            self.driver.find_element(By.XPATH,
+                                     f"//li[@class='kt-dropdown-item kt-dropdown-item--small' and text()='{highest} ']").click()
         else:
             self.driver.find_element(By.XPATH, "//li[text()='وارد کردن مقدار دلخواه']").click()
             desired_amount = self.driver.find_element(By.ID, 'max-1088541640')
             desired_amount.send_keys(highest)
             desired_amount.send_keys(Keys.ENTER)
         sleep(2)
+
+    def select_region(self, location):
+        self.driver.find_element(By.XPATH, '//button[@class="kt-action-field kt-action-field--small"]').click()
+        self.driver.find_element(By.XPATH, '//input[@id="textfield-2pa46m"]').send_keys(location)
+        search_region = self.driver.find_elements(By.XPATH, '//p[@class="kt-control-row__title"]')
+        if search_region:
+            for region in search_region:
 
 
 
