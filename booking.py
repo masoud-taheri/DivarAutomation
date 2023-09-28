@@ -94,10 +94,17 @@ class Booking:
         self.driver.find_element(By.XPATH, '//span[text()="تعیین محل"]').click()
         sleep(2)
         self.driver.find_element(By.XPATH, '//input[@class="kt-textfield__input kt-textfield__input--empty"]').send_keys(location)
-        sleep(3)
+        sleep(5)
         search_region = self.driver.find_elements(By.XPATH, '//p[@class="kt-control-row__title"]')
-        for region in search_region:
-            print(search_region.text)
+        click_button = self.driver.find_elements(By.XPATH, '//input[@class="kt-switch__input"]')
+        if search_region:
+            for button in click_button:
+                button_value= button.get_attribute("value")
+                self.driver.find_element(By.XPATH, f'//input[@class="kt-switch__input" and @value="{button_value}"]').click()
+                sleep(2)
+            self.driver.find_element(By.XPATH, '//button[@class="kt-button kt-button--primary"]').click()
+        else:
+            print(self.driver.find_element(By.XPATH, '//div[@class="kt-empty-state__title"]').text)
 
 
 
