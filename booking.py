@@ -89,11 +89,15 @@ class Booking:
         sleep(2)
 
     def select_region(self, location):
-        self.driver.find_element(By.XPATH, '//button[@class="kt-action-field kt-action-field--small"]').click()
-        self.driver.find_element(By.XPATH, '//input[@id="textfield-2pa46m"]').send_keys(location)
+        self.driver.find_element(By.XPATH, '//div[@id="khesht-1"]').click()
+        sleep(2)
+        self.driver.find_element(By.XPATH, '//span[text()="تعیین محل"]').click()
+        sleep(2)
+        self.driver.find_element(By.XPATH, '//input[@class="kt-textfield__input kt-textfield__input--empty"]').send_keys(location)
+        sleep(3)
         search_region = self.driver.find_elements(By.XPATH, '//p[@class="kt-control-row__title"]')
-        if search_region:
-            for region in search_region:
+        for region in search_region:
+            print(search_region.text)
 
 
 
