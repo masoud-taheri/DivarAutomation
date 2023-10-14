@@ -59,7 +59,8 @@ class RegisterAdvertise:
 
         sleep(5)
 
-
+    def registerInfo(self, city, state, image, add_type, status, show_phone, price, final_price, change, title, add_description):
+        self.driver.find_element(By.XPATH,"")
 
 
 
