@@ -33,6 +33,8 @@ class RegisterAdvertise:
         category_list_names=[]
         sub_category_names=[]
         sub_sub_category_names=[]
+        self.driver.find_element(By.XPATH,"//p[@class='kt-selector-row__title']").click()
+        sleep(2)
         for item in category_list:
             category_list_names.append(item.text)
         if category in category_list_names:
